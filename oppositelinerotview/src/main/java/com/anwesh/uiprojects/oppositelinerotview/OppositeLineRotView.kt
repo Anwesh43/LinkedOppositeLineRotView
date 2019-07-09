@@ -193,4 +193,26 @@ class OppositeLineRotView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : OppositeLineRotView) {
+
+        private val olr : OppositeLineRot = OppositeLineRot(0)
+        private val animator : Animator = Animator(view)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            olr.draw(canvas, paint)
+            animator.animate {
+                olr.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            olr.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
