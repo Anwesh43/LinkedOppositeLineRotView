@@ -30,3 +30,33 @@ fun Float.mirrorValue(a : Int, b : Int) : Float {
     return (1 - k) * a.inverse() + k * b.inverse()
 }
 fun Float.updateValue(dir : Float, a : Int, b : Int) : Float = mirrorValue(a, b) * dir * scGap
+
+fun Canvas.drawOppositeLineRot(i : Int, sc1 : Float, sc2 : Float, size : Float, paint : Paint) {
+    val sci1 : Float = sc1.divideScale(i, lines)
+    val sci2 : Float = sc2.divideScale(i, lines)
+    for (j in 0..1) {
+        save()
+        translate(-size * (1 - 2 * i) * sci1,size * (1 - 2 * i))
+        rotate(-j * 45f  * sci2)
+        drawLine(0f, 0f, size * (1 - 2 * i) * sci1, 0f, paint)
+        restore()
+    }
+}
+
+fun Canvas.drawOLRNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = h / (nodes + 1)
+    val size : Float = gap / sizeFactor
+    val sc1 : Float = scale.divideScale(0, 2)
+    val sc2 : Float = scale.divideScale(1, 2)
+    paint.color = foreColor
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
+    save()
+    translate(w / 2, gap * (i + 2))
+    for (j in 0..(lines - 1)) {
+        drawOppositeLineRot(j, sc1, sc2, size, paint)
+    }
+    restore()
+}
