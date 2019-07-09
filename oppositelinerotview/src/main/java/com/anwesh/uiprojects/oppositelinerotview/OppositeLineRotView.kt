@@ -216,4 +216,13 @@ class OppositeLineRotView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : OppositeLineRotView {
+            val view : OppositeLineRotView = OppositeLineRotView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
