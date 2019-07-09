@@ -54,7 +54,8 @@ fun Canvas.drawOLRNode(i : Int, scale : Float, paint : Paint) {
     paint.strokeCap = Paint.Cap.ROUND
     paint.strokeWidth = Math.min(w, h) / strokeFactor
     save()
-    translate(w / 2, gap * (i + 2))
+    translate(w / 2, gap * (i + 1))
+    drawLine(0f, -size, 0f, size, paint)
     for (j in 0..(lines - 1)) {
         drawOppositeLineRot(j, sc1, sc2, size, paint)
     }
